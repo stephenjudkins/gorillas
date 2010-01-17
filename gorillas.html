@@ -9,16 +9,46 @@
   article, aside, dialog, figure, footer, header,
   hgroup, menu, nav, section { display: block; }
   body {
-    background: #ddd;
+    background: #a8a298;
+    padding:0;margin:0;
+    font:normal 10px/15px Helvetica, sans-serif;
+  }
+  #wrapper {
+    margin:0 auto;
+    width:1000px;
+    padding:1em 0 0 0;
   }
   #canvas {
+    position:relative;
+    display:block;
+    width:1000px;
     cursor:crosshair;
+  }
+  #brand h1 {
+    display:block;
+    text-indent:-9999px;
+    background:url(boomnanas.png) no-repeat top left;
+    width:271px; height:130px;
+    margin:0 0 -20px 0; padding:0;
+    position:relative;
+    z-index:1;
+  }
+  #footer p {
+    padding:0; margin:0;
+    text-align:center;
   }
 </style>
 </head>
 <body>
-<div id="canvas"></div>
-
+<div id="wrapper">
+  <div id="brand">
+    <h1>bOOMnanas!</h1>
+  </div>
+  <div id="canvas"></div>
+  <div id="footer">
+    <p>click to toss a bunch'o'bananas!</p>
+  </div>
+</div>
 <script type="application/javascript">
   $(function() {
     var width = 1000;
