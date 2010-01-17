@@ -67,14 +67,27 @@
       drawArc(x,y);
     });
 
-    var monkeyLeft = paper.image("evil_monkey_left.png", -12, 260, 205, 154);
-    monkeyLeft.insertAfter(rect);
-    var monkeyRight = paper.image("evil_monkey_right2.png", 800, 260, 205, 154);
-    monkeyRight.insertAfter(rect);
-
-
     var path = paper.path('M 0 400' + 'Q 500 -400 1000 400');
     path.attr({stroke:"#555", "stroke-width":2, "stroke-dasharray":"- ", "stroke-opacity":.25});
+    // var purple = paper.path('M 0 400' + 'Q 500 -400 1000 400');
+    // var blue = paper.path('M 0 400' + 'Q 500 -400 1000 400');
+    // var green = paper.path('M 0 400' + 'Q 500 -400 1000 400');
+    // var yellow = paper.path('M 0 400' + 'Q 500 -400 1000 400');
+    // var orange = paper.path('M 0 400' + 'Q 500 -400 1000 400');
+    // var red = paper.path('M 0 400' + 'Q 500 -400 1000 400');
+    // red.attr({stroke:"red", "stroke-width":"5"});
+    // orange.attr({stroke:"orange", "stroke-width":"15"});
+    // yellow.attr({stroke:"yellow", "stroke-width":"25"});
+    // green.attr({stroke:"green", "stroke-width":"35"});
+    // blue.attr({stroke:"blue", "stroke-width":"45"});
+    // purple.attr({stroke:"purple", "stroke-width":"55"});
+
+
+    var monkeyLeft = paper.image("evil_monkey_left.png", 4, 304, 112, 90);
+    monkeyLeft.insertAfter(rect);
+    var monkeyRight = paper.image("evil_monkey_right.png", 896, 304, 100, 90);
+    monkeyRight.insertAfter(rect);
+
 
     // var drawCircle = function(x, y, color) {
     //   var circle = paper.circle(x, y, r);
@@ -91,9 +104,9 @@
     };
     
     var drawTarget = function(x, y, color) {
-      var circle = paper.circle(x, y, (r - (r * .25)));
+      var circle = paper.circle(x, y, (r - (r * .5)));
       color = color || '#666';
-      circle.attr({fill: '#aaa', "opacity": ".8", "stroke":"#333", "stroke-width": "3", "stroke-opacity": ".6"});
+      circle.attr({fill: '#eea', "opacity": ".8", "stroke":"#333", "stroke-width": "2", "stroke-opacity": ".6"});
       circle.animate({"opacity":0}, 800, "<")
       return circle;
     };
