@@ -52,7 +52,7 @@
 <script type="application/javascript">
   $(function() {
     var width = 1000;
-    var height = 400;
+    var height = 700;
     var r = 20;
     var paper = Raphael("canvas", width, height);
     window.paper = paper;
@@ -79,7 +79,7 @@
 
     var drawCircle = function(x, y) {
       var circle = paper.image("banana-40px.png", x, y, 40, 41);
-      circle.animate({"rotation":700}, 3000, ">");
+      circle.animate({"rotation":4000}, 10000, ">");
       return circle;
     };
     
@@ -91,7 +91,7 @@
       return circle;
     };
     
-    var gravity = 1;
+    var gravity = 10;
 
     var drawArc = function(x, y) {
       var vy = Math.sqrt(4 * gravity * (height - y));
@@ -102,9 +102,10 @@
       
       var circle = drawCircle(0, height);
 
-      var next = function(i) {
-        var t = i / 3.5;
-        var y = (-gravity * Math.pow(t, 2)) + (vy * t);
+      var start = +new Date();
+      var next = function() {
+        var t = (+new Date() - start) / 200;
+          var y = (-gravity * Math.pow(t, 2)) + (vy * t);
         y = height - y;
 
         var x = vx * t;
@@ -112,16 +113,14 @@
         var x = x - 20, y = y - 20;
         var dx = x - circle.attr('x');
         var dy = y - circle.attr('y');
-        
+
         circle.translate(dx, dy);
 
-        // console.log([x, y]);
-        // console.log([(height - 2 * r), (width - 2 * r)])
         if ((y > height) || (x > width)) { 
           // circle.remove();
           return;
         }
-        setTimeout(function() { next (i + 1); });
+        setTimeout(function() { next (); });
       };
         
       next(0);
@@ -131,7 +130,7 @@
     
     var randomThrow = function() {
       var x = Math.random() * width, y = Math.random() * height;
-      // console.log([x,y]);
+
       drawArc(x, y);
       setTimeout(randomThrow, 400);
     }
