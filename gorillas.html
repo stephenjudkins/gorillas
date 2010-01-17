@@ -61,8 +61,8 @@
     // rect.attr('fill', 'white');    
     // var bg = paper.image("portland_bg.jpg", 0, 0, 1000, 400);
     rect.click(function(event) {
-      var x = event.pageX, y = event.pageY;
-      // ;
+      var offset = $("#canvas").offset();
+      var x = event.pageX - offset.top, y = event.pageY - offset.left;
       drawArc(x,y);
     });
 
