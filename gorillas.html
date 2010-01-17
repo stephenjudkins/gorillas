@@ -56,11 +56,10 @@
     var r = 20;
     var paper = Raphael("canvas", width, height);
     window.paper = paper;
-    var rect = paper.rect(0,0, width, height, 10);
-    rect.attr({"stroke-width":0});
-    // paper.draw(0, $)
-
-    rect.attr('fill', 'white');    
+    var rect = paper.image("portland_bg.jpg", 0, 0, 1000, 400);
+    // rect.attr({"stroke-width":0});
+    // rect.attr('fill', 'white');    
+    // var bg = paper.image("portland_bg.jpg", 0, 0, 1000, 400);
     rect.click(function(event) {
       var x = event.pageX, y = event.pageY;
       // ;
