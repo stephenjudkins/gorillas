@@ -3,8 +3,6 @@
 <head>
 <meta charset="utf-8" />
 <title>Gorillas</title>
-<script type="application/javascript" src="jquery-1.4.js"></script>
-<script type="application/javascript" src="raphael.js"></script>
 <style>
   article, aside, dialog, figure, footer, header,
   hgroup, menu, nav, section { display: block; }
@@ -49,116 +47,9 @@
     <p>click to toss a bunch'o'bananas!</p>
   </div>
 </div>
-<script type="application/javascript">
-  $(function() {
-    var width = 1000;
-    var height = 400;
-    var r = 20;
-    var paper = Raphael("canvas", width, height);
-    window.paper = paper;
-    
-    var rect = paper.image("portland_bg.jpg", 0, 0, 1000, 400);
-    // rect.attr({"stroke-width":0});
-    // rect.attr('fill', 'white');    
-    // var bg = paper.image("portland_bg.jpg", 0, 0, 1000, 400);
-    rect.click(function(event) {
-      var offset = $("#canvas").offset();
-      var x = event.pageX - offset.top, y = event.pageY - offset.left;
-      drawArc(x,y);
-    });
+<script type="application/javascript" src="jquery-1.4.js"></script>
+<script type="application/javascript" src="raphael.js"></script>
+<script type="application/javascript" src="gorillas.js"></script>
 
-    var path = paper.path('M 0 400' + 'Q 500 -400 1000 400');
-    path.attr({stroke:"#555", "stroke-width":2, "stroke-dasharray":"- ", "stroke-opacity":.25});
-    // var purple = paper.path('M 0 400' + 'Q 500 -400 1000 400');
-    // var blue = paper.path('M 0 400' + 'Q 500 -400 1000 400');
-    // var green = paper.path('M 0 400' + 'Q 500 -400 1000 400');
-    // var yellow = paper.path('M 0 400' + 'Q 500 -400 1000 400');
-    // var orange = paper.path('M 0 400' + 'Q 500 -400 1000 400');
-    // var red = paper.path('M 0 400' + 'Q 500 -400 1000 400');
-    // red.attr({stroke:"red", "stroke-width":"5"});
-    // orange.attr({stroke:"orange", "stroke-width":"15"});
-    // yellow.attr({stroke:"yellow", "stroke-width":"25"});
-    // green.attr({stroke:"green", "stroke-width":"35"});
-    // blue.attr({stroke:"blue", "stroke-width":"45"});
-    // purple.attr({stroke:"purple", "stroke-width":"55"});
-
-
-    var monkeyLeft = paper.image("evil_monkey_left.png", 4, 304, 112, 90);
-    monkeyLeft.insertAfter(rect);
-    var monkeyRight = paper.image("evil_monkey_right.png", 896, 304, 100, 90);
-    monkeyRight.insertAfter(rect);
-
-
-    // var drawCircle = function(x, y, color) {
-    //   var circle = paper.circle(x, y, r);
-    //   color = color || 'red';
-    //   circle.attr({fill: '#f72', "stroke-width": "2", "stroke-dasharray": "-."});
-    //   circle.animate({"rotation":-280}, 2000, ">");
-    //   return circle;
-    // };
-
-    var drawCircle = function(x, y) {
-      var circle = paper.image("banana-40px.png", x, y, 40, 41);
-      circle.animate({"rotation":4000}, 10000, ">");
-      return circle;
-    };
-    
-    var drawTarget = function(x, y, color) {
-      var circle = paper.circle(x, y, (r - (r * .5)));
-      color = color || '#666';
-      circle.attr({fill: '#eea', "opacity": ".8", "stroke":"#333", "stroke-width": "2", "stroke-opacity": ".6"});
-      circle.animate({"opacity":0}, 800, "<")
-      return circle;
-    };
-    
-    var gravity = 10;
-
-    var drawArc = function(x, y) {
-      var vy = Math.sqrt(4 * gravity * (height - y));
-
-      var vx = (2 * gravity * x)  / vy;
-
-      drawTarget(x,y, "#f00");
-      
-      var circle = drawCircle(0, height);
-
-      var start = +new Date();
-      var next = function() {
-        var t = (+new Date() - start) / 200;
-          var y = (-gravity * Math.pow(t, 2)) + (vy * t);
-        y = height - y;
-
-        var x = vx * t;
-
-        var x = x - 20, y = y - 20;
-        var dx = x - circle.attr('x');
-        var dy = y - circle.attr('y');
-
-        circle.translate(dx, dy);
-
-        if ((y > height) || (x > width)) { 
-          // circle.remove();
-          return;
-        }
-        setTimeout(function() { next (); });
-      };
-        
-      next(0);
-
-
-    };
-    
-    var randomThrow = function() {
-      var x = Math.random() * width, y = Math.random() * height;
-
-      drawArc(x, y);
-      setTimeout(randomThrow, 400);
-    }
-    // randomThrow();
-    
-
-  });
-
-</script>
 </body>
 </html>
