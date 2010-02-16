@@ -114,7 +114,7 @@ var Gorillas = (function() {
   };
 
   var drawBananas = function(x, y) {
-    var circle = paper.image("banana-40px.png", x, y, 40, 41);
+    var circle = paper.image("assets/banana-40px.png", x, y, 40, 41);
     circle.animate({"rotation":4000}, 10000, ">");
     return circle;
   };
@@ -128,7 +128,7 @@ var Gorillas = (function() {
 
       window.paper = Gorillas.paper;
 
-      var rect = paper.image("portland_bg.jpg", 0, 0, 1000, 400);
+      var rect = paper.image("assets/portland_bg.jpg", 0, 0, 1000, 400);
 
       rect.click(function(event) {
         var offset = $(event.target).offset();
@@ -153,9 +153,9 @@ var Gorillas = (function() {
         guide.attr({path: p.pathParameters()});
       });
 
-      var monkeyLeft = paper.image("evil_monkey_left.png", -12, 260, 205, 154);
+      var monkeyLeft = paper.image("assets/evil_monkey_left.png", -12, 260, 205, 154);
       monkeyLeft.insertAfter(rect);
-      var monkeyRight = paper.image("evil_monkey_right2.png", 800, 260, 205, 154);
+      var monkeyRight = paper.image("assets/evil_monkey_right2.png", 800, 260, 205, 154);
       monkeyRight.insertAfter(rect);
 
     }
