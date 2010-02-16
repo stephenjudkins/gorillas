@@ -3,6 +3,7 @@ var Gorillas = (function() {
   var gravity = 10;
   var width = 1000;
   var height = 400;
+  var ticksPerSecond = 200;
 
   var r = 20;
 
@@ -17,6 +18,23 @@ var Gorillas = (function() {
 
       return [x, height - y];
     },
+    pathParameters: function() {
+      var bottom = this.bottom();
+      var peak = this.peak();
+
+      var origin = [0, height];
+
+      var control = [bottom[0] / 2, height - ((height - peak[1]) * 2)];
+
+      var end = [bottom[0], height];
+
+      return [["M", origin[0], origin[1]], ["Q", control[0], control[1], end[0], end[1]]];
+    },
+    makePath: function() {
+      var path = paper.path(this.pathParameters());
+      path.attr({stroke:"#555", "stroke-width":2, "stroke-dasharray":"- ", "stroke-opacity":1});
+      path.animate({"opacity":0}, 1800, "<");
+    },
     toss: function() {
       var bottom = this.bottom();
       var peak = this.peak();
@@ -24,27 +42,14 @@ var Gorillas = (function() {
       drawTarget(bottom[0], height);
       drawTarget(peak[0], peak[1]);
 
-      var origin = '0 ' + height;
-
-      var control = bottom[0] / 2 + ' ' + (height - ((height - peak[1]) * 2));
-
-      var end = bottom[0] + ' ' + height;
-
-      var p = 'M ' + origin +
-        ' Q ' + control + ' ' + end;
-
-      console.log(p);
-      var path = paper.path(p);
-      path.attr({stroke:"#555", "stroke-width":2, "stroke-dasharray":"- ", "stroke-opacity":1});
-      path.animate({"opacity":0}, 1800, "<");
-
+      this.makePath();
       var vx = this.vx, vy = this.vy;
 
       var bananas = drawBananas(0, height);
 
       var start = +new Date();
       var next = function() {
-        var t = (+new Date() - start) / 200;
+        var t = (+new Date() - start) / ticksPerSecond;
 
         var y = (-gravity * Math.pow(t, 2)) + (vy * t);
         y = height - y;
@@ -58,7 +63,7 @@ var Gorillas = (function() {
         bananas.translate(dx, dy);
 
         if ((y > height) || (x > width)) {
-          // circle.remove();
+          circle.remove();
           return;
         }
         setTimeout(next);
@@ -71,12 +76,24 @@ var Gorillas = (function() {
       var tb = this.vy / gravity;
       return this.positionAt(tb);
     },
-    showArc: function() {
-
-    },
     peak: function() {
       var tp = this.vy / (2 * gravity);
       return this.positionAt(tp);
+    },
+    halfDistance: function() {
+      var width = this.bottom()[0];
+      var tb = this.vy / gravity;
+      // console.log([tb, width]);
+      // console.log(width);
+      // console.log(this.vy, Math.pow(tb * 2));
+      // console.log(width + (this.vy * Math.pow(tb, 2) / 2) - (gravity * Math.pow(tb, 3) / 3));
+      // return width + (this.vy * Math.pow(tb, 2) / 2) - (gravity * Math.pow(tb, 3) / 3);
+
+      var sqrt = Math.sqrt, pow = Math.pow;
+      var vy = this.vy, vx = this.vx;
+      // return 3 * gravity * sqrt(pow(vy, 2) * ((pow(vy, 2) / 4) + pow(vx, 2) ));
+      // return 6 * Math.pow(gravity, 2) * Math.sqrt((Math.pow(this.vy, 2) / 4) + Math.pow(this.vx, 2));
+
     }
   };
 
@@ -124,6 +141,18 @@ var Gorillas = (function() {
         return false;
       });
 
+      var guide = paper.path();
+      window.guide = guide;
+
+      $(rect.node).bind('mousemove', function(event) {
+        var offset = $(event.target).offset();
+        var x = event.pageX - offset.left, y = event.pageY - offset.top;
+
+        var p = Path.fromPeakOfArc(x,y);
+
+        guide.attr({path: p.pathParameters()});
+      });
+
       var monkeyLeft = paper.image("evil_monkey_left.png", -12, 260, 205, 154);
       monkeyLeft.insertAfter(rect);
       var monkeyRight = paper.image("evil_monkey_right2.png", 800, 260, 205, 154);
@@ -135,10 +164,4 @@ var Gorillas = (function() {
 
 $(function() {
   Gorillas.drawPaper();
-  // var path = paper.path('M 0 400' + 'Q 500 -400 1000 400');
-  // path.attr({stroke:"#555", "stroke-width":2, "stroke-dasharray":"- ", "stroke-opacity":.25});
-
-
-
-
 });
