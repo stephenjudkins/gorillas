@@ -132,14 +132,14 @@ var Gorillas = (function() {
 
       var guide = paper.path();
 
-      $(rect.node).bind('mousemove', function(event) {
-        var offset = $(event.target).offset();
-        var x = event.pageX - offset.left, y = event.pageY - offset.top;
+      // $(rect.node).bind('mousemove', function(event) {
+      //   var offset = $(event.target).offset();
+      //   var x = event.pageX - offset.left, y = event.pageY - offset.top;
 
-        var p = game.Path.fromPeakOfArc(x,y);
+      //   var p = game.Path.fromPeakOfArc(x,y);
 
-        guide.attr({path: p.pathParameters()});
-      });
+      //   guide.attr({path: p.pathParameters()});
+      // });
 
       var monkeyLeft = paper.image("assets/evil_monkey_left.png", -12, 260, 205, 154);
       monkeyLeft.insertAfter(rect);
